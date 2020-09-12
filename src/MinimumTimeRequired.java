@@ -9,34 +9,40 @@ import java.util.regex.*;
 public class MinimumTimeRequired {
 
     // Complete the minTime function below.
+	//brute force
+	
+	/*
+	 * static long minTime(long[] machines, long goal) { long[] temp =
+	 * Arrays.copyOf(machines, machines.length); long tempGoal = 0; long day = 1;
+	 * boolean goalMet = false; while(tempGoal < goal) { for(int i = 0; i <
+	 * machines.length; i++) { temp[i] = temp[i]-1; if(temp[i] == 0) { tempGoal++;
+	 * temp[i] = machines[i]; if(goal == tempGoal) { goalMet = true; } } }
+	 * if(goalMet) { break; } day++; } return day; }
+	 */
+	// Complete the minTime function below.
+	//optimized
     static long minTime(long[] machines, long goal) {
-    	
-    	long[] temp = Arrays.copyOf(machines, machines.length);
-    	long tempGoal = 0;
-    	long day = 1;
-    	boolean goalMet = false;
-    	while(tempGoal < goal) {
-    		for(int i = 0; i < machines.length; i++) {
-    			temp[i] = temp[i]-1;
-    			if(temp[i] == 0) {
-    				tempGoal++;
-    				temp[i] = machines[i];
-    				if(goal == tempGoal) {
-    					goalMet = true;
-    				}
-    			}
-    		}
-    		if(goalMet) {
-    			break;
-    		}
-    		day++;
-    	}
-    	
-    	return day;
-
-
+    	Arrays.sort(machines);
+        long maxDays = machines[machines.length-1] * goal;
+        long minDays = 0;
+        long result = -1;
+        while(minDays < maxDays) {
+            long mid = (minDays+maxDays)/2;
+            long sum = 0;
+            for(long machine: machines) {
+                sum += mid/machine;
+            }
+            if(sum < goal) {
+                minDays = mid + 1;
+            }
+            else {
+                maxDays = mid;
+                result = mid;
+            }
+        }
+        return result;
+        
     }
-
     private static final Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) throws IOException {
