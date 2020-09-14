@@ -64,18 +64,44 @@ public class MergePointOfTwoLists {
      *
      */
     static int findMergeNode(SinglyLinkedListNode head1, SinglyLinkedListNode head2) {
-    	SinglyLinkedListNode tempHead1 = head1;
-    	while(tempHead1 != null) {
-    		SinglyLinkedListNode tempHead2 = head2;
-    		while(tempHead2 != null) {
-    			if(tempHead2 == tempHead1) {
-    				return tempHead2.data;
+		/*
+		 * SinglyLinkedListNode tempHead1 = head1; while(tempHead1 != null) {
+		 * SinglyLinkedListNode tempHead2 = head2; while(tempHead2 != null) {
+		 * if(tempHead2 == tempHead1) { return tempHead2.data; } tempHead2 =
+		 * tempHead2.next; } tempHead1 = tempHead1.next; } return 0;
+		 */
+    	
+    		SinglyLinkedListNode currentA = head1;
+    		SinglyLinkedListNode currentB = head2;
+
+    	    //Do till the two nodes are the same
+		/*
+		 * while(currentA != currentB){ //If you reached the end of one list start at
+		 * the beginning of the other one //currentA if(currentA.next == null){ currentA
+		 * = head2; }else{ currentA = currentA.next; } //currentB if(currentB.next ==
+		 * null){ currentB = head1; }else{ currentB = currentB.next; } }
+		 */
+    		
+    		while(currentA != currentB) {
+    			
+    			if(currentA.next == null) {
+    				currentA = head2;
     			}
-    			tempHead2 = tempHead2.next;
+    			else {
+    				currentA = currentA.next;
+    			}
+    			
+    			if(currentB.next == null) {
+    				currentB = head1;
+    			}
+    			else {
+    				currentB = currentB.next;
+    			}
+    			
     		}
-    		tempHead1 = tempHead1.next;
-    	}
-    	return 0;
+    		
+    		
+    	    return currentB.data;
     }
 
     private static final Scanner scanner = new Scanner(System.in);
